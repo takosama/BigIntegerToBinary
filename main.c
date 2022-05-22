@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-char getval(char* arr, int end, int n, int offset)
+char _Rin_BCDtoBin_Converter_getval(char* arr, int end, int n, int offset)
 {
 	int idx = end - 1 - n;
 
@@ -15,7 +15,7 @@ char getval(char* arr, int end, int n, int offset)
 	return val;
 }
 
-void setval(char* arr, int end, int n, int offset, char val)
+void _Rin_BCDtoBin_Converter_setval(char* arr, int end, int n, int offset, char val)
 {
 	int idx = end - 1 - n;
 
@@ -35,7 +35,7 @@ void setval(char* arr, int end, int n, int offset, char val)
 	*(arr + idx / 2 - 1) = (*(arr + idx / 2 - 1) & ~mask1) | (tmp1 & mask1);
 }
 
-char* _BCDtoBin_Converter_Read_DECtoBCD(FILE* input,int* cnt)
+char* _Rin_BCDtoBin_Converter_Read_DECtoBCD(FILE* input,int* cnt)
 {
 	int size = 1;
 	 *cnt = 1;
@@ -67,7 +67,7 @@ char* _BCDtoBin_Converter_Read_DECtoBCD(FILE* input,int* cnt)
 	return p;
 }
 
-typedef struct _BCDtoBin_Converter_State
+typedef struct _Rin_BCDtoBin_Converter_State
 {
 	int cnt;
 	int end;
@@ -75,25 +75,25 @@ typedef struct _BCDtoBin_Converter_State
 	char* ptr;
 }BCDtoBin_Converter_State;
 
-typedef struct _BCDtoBin_Converter_Result
+typedef struct _Rin_BCDtoBin_Converter_Result
 {
 	int value;
 	int isend;
 }BCDtoBin_Converter_Result;
 
 
-void _BCDtoBin_Converter_Init(BCDtoBin_Converter_State* s, BCDtoBin_Converter_Result* r, char* BCD_array, int cnt)
+void _Rin_BCDtoBin_Converter_Init(BCDtoBin_Converter_State* s, BCDtoBin_Converter_Result* r, char* BCD_array, int cnt)
 {
 	s->end = 0;
 	s->iter = 0;
 	s->cnt = cnt;
 	s->ptr = BCD_array;
-	r->value= 1 & getval(s->ptr, s->cnt, s->end, s->iter);
+	r->value= 1 & _Rin_BCDtoBin_Converter_getval(s->ptr, s->cnt, s->end, s->iter);
 	r->isend = 0;
 }
 
 
-void _BCDtoBin_Converter_ComputeNext(BCDtoBin_Converter_State* s, BCDtoBin_Converter_Result* r)
+void _Rin_BCDtoBin_Converter_ComputeNext(BCDtoBin_Converter_State* s, BCDtoBin_Converter_Result* r)
 {
 	s->iter++;
 	if (s->iter == 4)
@@ -106,11 +106,11 @@ void _BCDtoBin_Converter_ComputeNext(BCDtoBin_Converter_State* s, BCDtoBin_Conve
 	char c = 0;
 	for (int i = s->cnt - 2; i >= s->end; i--)
 	{
-		c = getval(s->ptr, s->cnt, i, s->iter);
+		c = _Rin_BCDtoBin_Converter_getval(s->ptr, s->cnt, i, s->iter);
 		if (c >= 8)
 		{
 			c -= 3;
-			setval(s->ptr, s->cnt, i, s->iter, c);
+			_Rin_BCDtoBin_Converter_setval(s->ptr, s->cnt, i, s->iter, c);
 		}
 		r->isend |= c;
 	}
@@ -119,20 +119,20 @@ void _BCDtoBin_Converter_ComputeNext(BCDtoBin_Converter_State* s, BCDtoBin_Conve
 }
 
 
-struct  _BCDtoBin_Converter_State state;
-struct  _BCDtoBin_Converter_Result result;
+struct  _Rin_BCDtoBin_Converter_State state;
+struct  _Rin_BCDtoBin_Converter_Result result;
 
 int main(void)
 {
 	int* pcnt = malloc(sizeof(int));
-	char* p= _BCDtoBin_Converter_Read_DECtoBCD(stdin, pcnt);
+	char* p= _Rin_BCDtoBin_Converter_Read_DECtoBCD(stdin, pcnt);
 
-	_BCDtoBin_Converter_Init(&state, &result, p, *pcnt);
+	_Rin_BCDtoBin_Converter_Init(&state, &result, p, *pcnt);
 	putchar(result.value+'0');
 
 	while (1)
 	{
-		_BCDtoBin_Converter_ComputeNext(&state, &result);
+		_Rin_BCDtoBin_Converter_ComputeNext(&state, &result);
 		if (result.isend)
 			break;
 		putchar(result.value + '0');
