@@ -4,6 +4,8 @@
 出力はストリーム等を考慮して逆順になっています
 ひっくり返せば通常用途で使えます
 サンプルはmain関数に記述しています
+
+
 deepl trans jp-en
 Converts positive multiple-length decimal numbers to binary numbers as long as memory allows
 Output is in reverse order for streaming, etc.
