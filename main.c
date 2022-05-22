@@ -62,9 +62,7 @@ int main(void)
 			}
 			size *= 2;
 		}
-		putchar(c);
 	}
-	putchar('\n');
 
 	int iter = 0;
 	int pos = 0;
