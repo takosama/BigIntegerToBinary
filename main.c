@@ -137,8 +137,9 @@ int main(void)
 			break;
 		putchar(result.value + '0');
 	}
-
-
 	putchar('\n');
+
+	free(p);
+	free(pcnt);
 	return 0;
 }
